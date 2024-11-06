@@ -43,7 +43,7 @@ class PromocodesDB {
 
     public PromocodesDB() {
         promocodes = new HashMap<>();
-        loadPromocodesFromFile("./codes.csv");
+        loadPromocodesFromFile("src/main/java/ru/turandot/codes.csv");
     }
 
     // Метод для загрузки промокодов из CSV файла
