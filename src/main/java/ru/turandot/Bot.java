@@ -9,6 +9,9 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMa
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.*;
 
@@ -40,12 +43,20 @@ class PromocodesDB {
 
     public PromocodesDB() {
         promocodes = new HashMap<>();
-        // Инициализация промокодов
-        promocodes.put("83Vx2e", false);
-        promocodes.put("Azx329", false);
-        promocodes.put("BZyvR8", false);
-        promocodes.put("N1juWd", false);
-        promocodes.put("w9sDve", false);
+        loadPromocodesFromFile("./codes.csv");
+    }
+
+    // Метод для загрузки промокодов из CSV файла
+    public void loadPromocodesFromFile(String filePath) {
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                // Добавляем промокод со статусом "неиспользованный"
+                promocodes.put(line.trim(), false);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public String getAvailablePromocode() {
